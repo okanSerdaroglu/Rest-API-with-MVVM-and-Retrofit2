@@ -25,5 +25,4 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void showProgressBar(boolean visibility){
         progressBar.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
     }
-
 }
