@@ -1,11 +1,10 @@
 package com.example.recipes;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.recipes.models.Recipe;
+import com.example.recipes.utils.Testing;
 import com.example.recipes.viewmodels.RecipeListViewModel;
 
 public class RecipeListActivity extends BaseActivity {
@@ -31,11 +30,7 @@ public class RecipeListActivity extends BaseActivity {
 
     private void subscribeObservers() {
         recipeListViewModel.getRecipeList().observe(this, recipes -> {
-            if (recipes != null && recipes.size() > 0) {
-                for (Recipe recipe : recipes) {
-                    Log.d(TAG, "onChanged" + recipe.getTitle());
-                }
-            }
+            Testing.printRecipes(recipes,TAG);
         });
     }
 
