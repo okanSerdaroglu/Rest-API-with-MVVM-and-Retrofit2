@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.recipes.models.Recipe;
+import com.example.recipes.repositories.RecipeRepository;
 
 import java.util.List;
 
@@ -16,12 +17,13 @@ import java.util.List;
 
 public class RecipeListViewModel extends ViewModel {
 
-    public RecipeListViewModel(){}
+    private RecipeRepository recipeRepository;
 
-    private MutableLiveData<List<Recipe>> recipeList = new MutableLiveData<>();
-
+    public RecipeListViewModel(){
+        recipeRepository = RecipeRepository.getInstance();
+    }
     public LiveData<List<Recipe>> getRecipeList() {
-        return recipeList;
+        return recipeRepository.getRecipes();
     }
 
 }

@@ -29,3 +29,6 @@
    6) Proper configuration changes
       - On configuration changes, like device rotation, immediately latest available data is received
       - Prevent redundant requests to network or db
+
+*  Data follows this path - Repository (Local - Remote) -> ViewModel (*) -> Activity/Fragment (*)
+      ViewModel and View don't know where data comes from Remote or Local
