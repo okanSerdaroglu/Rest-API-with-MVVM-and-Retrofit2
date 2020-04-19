@@ -46,11 +46,9 @@ public class RecipeApiClient {
             mRetrieveRecipesRunnable = null;
         }
         mRetrieveRecipesRunnable = new RetrieveRecipesRunnable(query,pageNumber);
-        final Future handler = AppExecutors.getInstance().networkIO().submit(() -> {
-            // retrieve data from rest API
-            // mRecipes.postValue()
 
-        });
+        final Future handler = AppExecutors.getInstance().networkIO().submit(mRetrieveRecipesRunnable);
+
         AppExecutors.getInstance().networkIO().schedule(() -> {
             // let the user know its time out
             handler.cancel(true);
