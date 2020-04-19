@@ -1,0 +1,31 @@
+* why we need this MVVM architecture with liveData ? (Look at mvvmArchitecture.png)
+
+  If you put all things in the same class which called Activity there are several problems.
+  - They are extremely complex and difficult to read and modify.
+  - They contain all kinds of interdependencies that can cause issues. So if one thing breaks,
+    likely many thing will break
+  - Dealing with lifecycle events is a pain because there is so many variables you need to account for
+  - They are very difficult to unit test
+
+* 6 reasons Why you should use LiveData
+
+   1) LiveData ensures your UI matches your data state
+      - LiveData follows observer pattern
+      - LiveData notifies Observer objects when the lifecycle state changes
+      - Cleaner code structure
+   2) You won't get memory leaks
+      - Observers are bound to lifecycle objects
+      - Lifecycle objects are cleaned up after their associated lifecycle is destroyed
+   3) No crashes due to stopped activities
+      - If the observers lifecycle is inactive, such as in the case of an activity in the backStack
+        then it does not receive any liveData events
+   4) No more manuel lifecycle handling
+      - UI components just observe relevant data and don't stop or resume observation
+      - LiveData manages automatically all of this since it is aware of the relevant lifecycle status
+        changes while observing
+   5) Your data always up to date
+      - What happens if a lifecycle becomes inactive ?
+      - It would receive the latest data upon becoming active again
+   6) Proper configuration changes
+      - On configuration changes, like device rotation, immediately latest available data is received
+      - Prevent redundant requests to network or db
