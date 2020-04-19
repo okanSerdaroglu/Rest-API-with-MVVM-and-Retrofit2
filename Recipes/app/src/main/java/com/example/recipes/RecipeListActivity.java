@@ -1,11 +1,7 @@
 package com.example.recipes;
 
-
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipes.models.Recipe;
