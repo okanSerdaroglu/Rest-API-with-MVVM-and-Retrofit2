@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.recipes.R;
 import com.example.recipes.models.Recipe;
 
@@ -21,6 +23,7 @@ public class RecipeViewHolder
     private AppCompatImageView image;
     private OnRecipeListener recipeListener;
 
+
     RecipeViewHolder(@NonNull View itemView, OnRecipeListener recipeListener) {
         super(itemView);
         this.recipeListener = recipeListener;
@@ -30,7 +33,13 @@ public class RecipeViewHolder
         image = itemView.findViewById(R.id.recipe_image);
     }
 
-    void onBind (Recipe recipe){
+    void onBind(Recipe recipe) {
+
+        RequestOptions requestOptions = new RequestOptions().
+                placeholder(R.drawable.ic_launcher_background);
+        Glide.with(image.getContext()).
+                setDefaultRequestOptions(requestOptions).load(recipe.getImage_url()).into(image);
+
         textViewTitle.setText(recipe.getTitle());
         textViewPublisher.setText(recipe.getPublisher());
         textViewSocialScore.setText(String.valueOf(recipe.getSocial_rank()));
