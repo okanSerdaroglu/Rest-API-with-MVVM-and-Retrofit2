@@ -2,6 +2,7 @@ package com.example.recipes;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     private RecipeListViewModel recipeListViewModel;
     private RecyclerView recyclerViewRecipeList;
     private RecipeRecyclerAdapter recipeRecyclerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,23 +29,39 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         initRecyclerView();
 
         subscribeObservers();
-        testRetrofitRequest();
+        initSearchView();
     }
 
     private void searchRecipesAPI(String query, int pageNumber) {
         recipeListViewModel.searchRecipesAPI(query, pageNumber);
     }
 
+    private void initSearchView() {
+        final SearchView searchView = findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchRecipesAPI(query, 0);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
+
     private void subscribeObservers() {
         recipeListViewModel.getRecipeList().observe(this, recipes -> {
-            if (recipes != null){
-                Testing.printRecipes(recipes,TAG);
+            if (recipes != null) {
+                Testing.printRecipes(recipes, TAG);
                 recipeRecyclerAdapter.setRecipes(recipes);
             }
         });
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         recipeRecyclerAdapter = new RecipeRecyclerAdapter(this);
         recyclerViewRecipeList.setAdapter(recipeRecyclerAdapter);
     }
@@ -59,7 +77,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     }
 
-    private void testRetrofitRequest (){
-        searchRecipesAPI("chicken breast",0);
+    private void testRetrofitRequest() {
+        searchRecipesAPI("chicken breast", 0);
     }
 }
