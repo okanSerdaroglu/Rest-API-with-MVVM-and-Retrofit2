@@ -18,6 +18,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     private RecipeListViewModel recipeListViewModel;
     private RecyclerView recyclerViewRecipeList;
     private RecipeRecyclerAdapter recipeRecyclerAdapter;
+    private SearchView searchView;
 
 
     @Override
@@ -42,12 +43,13 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     }
 
     private void initSearchView() {
-        final SearchView searchView = findViewById(R.id.search_view);
+        searchView = findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 recipeRecyclerAdapter.displayLoading();
                 searchRecipesAPI(query, 0);
+                searchView.clearFocus();
                 return false;
             }
 
@@ -63,6 +65,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
             if (recipes != null) {
                 if (recipeListViewModel.isViewingRecipes()){
                     Testing.printRecipes(recipes, TAG);
+                    recipeListViewModel.setPerformingQuery(false);
                     recipeRecyclerAdapter.setRecipes(recipes);
                 }
             }
@@ -88,6 +91,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
         recipeRecyclerAdapter.displayLoading();
         recipeListViewModel.searchRecipesAPI(category, 0);
+        searchView.clearFocus();
 
     }
 
