@@ -17,8 +17,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private List<Recipe>mRecipes;
     private OnRecipeListener recipeListener;
 
-    public RecipeRecyclerAdapter(List<Recipe> mRecipes, OnRecipeListener recipeListener) {
-        this.mRecipes = mRecipes;
+    public RecipeRecyclerAdapter(OnRecipeListener recipeListener) {
+
         this.recipeListener = recipeListener;
     }
 
@@ -38,7 +38,11 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemCount() {
-        return mRecipes.size();
+        if (mRecipes != null){
+            return mRecipes.size();
+        } else {
+            return 0;
+        }
     }
 
     public void setRecipes (List<Recipe>recipes){
