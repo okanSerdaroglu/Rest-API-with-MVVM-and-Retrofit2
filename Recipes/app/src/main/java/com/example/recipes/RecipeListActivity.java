@@ -1,7 +1,10 @@
 package com.example.recipes;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +39,8 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         if (!recipeListViewModel.isViewingRecipes()) {
             displaySearchCategories();
         }
+
+        setSupportActionBar(findViewById(R.id.toolbar));
     }
 
     private void searchRecipesAPI(String query, int pageNumber) {
@@ -111,6 +116,19 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         } else {
             displaySearchCategories();
         }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.recipe_search_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_categories){
+            displaySearchCategories();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
