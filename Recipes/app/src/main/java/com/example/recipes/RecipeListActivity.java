@@ -30,6 +30,9 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
         subscribeObservers();
         initSearchView();
+        if (!recipeListViewModel.isViewingRecipes()){
+            displaySearchCategories();
+        }
     }
 
     private void searchRecipesAPI(String query, int pageNumber) {
@@ -76,9 +79,18 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     @Override
     public void onCategoryClick(String category) {
 
+        recipeRecyclerAdapter.displayLoading();
+        recipeListViewModel.searchRecipesAPI(category,0);
+
     }
 
     private void testRetrofitRequest() {
         searchRecipesAPI("chicken breast", 0);
     }
+
+    private void displaySearchCategories (){
+        recipeListViewModel.setViewingRecipes(true);
+        recipeRecyclerAdapter.displayCategories();
+    }
+
 }

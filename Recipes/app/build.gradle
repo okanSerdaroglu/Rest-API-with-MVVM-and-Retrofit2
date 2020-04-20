@@ -35,6 +35,7 @@ dependencies {
     def cardViewVersion = "1.0.0"
     def glideVersion = "4.11.0"
     def materialVersion = "1.1.0"
+    def circleImageViewVersion = "3.1.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -68,5 +69,8 @@ dependencies {
 
     // google material for AppBarLayout etc..
     implementation "com.google.android.material:material:$materialVersion"
+
+    // circle imageView
+    implementation "de.hdodenhof:circleimageview:$circleImageViewVersion"
 
 }

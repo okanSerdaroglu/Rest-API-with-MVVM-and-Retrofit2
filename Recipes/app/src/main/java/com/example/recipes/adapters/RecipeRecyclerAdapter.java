@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipes.R;
 import com.example.recipes.models.Recipe;
+import com.example.recipes.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private static final int RECIPE_TYPE = 1;
     private static final int LOADING_TYPE = 2;
+    private static final int CATEGORY_TYPE = 3;
 
     private List<Recipe> mRecipes;
     private OnRecipeListener recipeListener;
@@ -34,6 +36,11 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             view = LayoutInflater.from(parent.getContext()).
                     inflate(R.layout.layout_loading_list_item, parent, false);
             return new LoadingViewHolder(view);
+        } else if (viewType == CATEGORY_TYPE){
+            view = LayoutInflater.from(parent.getContext()).
+                    inflate(R.layout.layout_category_list_item, parent, false);
+            return new CategoryViewHolder(view,recipeListener);
+
         }
         view = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.recipe_list_item, parent, false);
@@ -48,16 +55,33 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         int itemViewType = getItemViewType(position);
         if (itemViewType == RECIPE_TYPE) {
             ((RecipeViewHolder) holder).onBind(recipe);
+        } else if (itemViewType == CATEGORY_TYPE){
+            ((CategoryViewHolder)holder).onBind(recipe);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (mRecipes.get(position).getTitle().equals("LOADING...")) {
+        if (mRecipes.get(position).getSocial_rank() == -1){
+            return CATEGORY_TYPE;
+        } else if (mRecipes.get(position).getTitle().equals("LOADING...")) {
             return LOADING_TYPE;
         } else {
             return RECIPE_TYPE;
         }
+    }
+
+    public void displayCategories (){
+        List<Recipe>categories = new ArrayList<>();
+        for (int i = 0; i< Constants.DEFAULT_SEARCH_CATEGORIES.length; i++){
+            Recipe recipe = new Recipe();
+            recipe.setTitle(Constants.DEFAULT_SEARCH_CATEGORIES[i]);
+            recipe.setImage_url(Constants.DEFAULT_SEARCH_CATEGORY_IMAGES[i]);
+            recipe.setSocial_rank(-1);
+            categories.add(recipe);
+        }
+        mRecipes = categories;
+        notifyDataSetChanged();
     }
 
     private boolean isLoading() {
