@@ -36,10 +36,10 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             view = LayoutInflater.from(parent.getContext()).
                     inflate(R.layout.layout_loading_list_item, parent, false);
             return new LoadingViewHolder(view);
-        } else if (viewType == CATEGORY_TYPE){
+        } else if (viewType == CATEGORY_TYPE) {
             view = LayoutInflater.from(parent.getContext()).
                     inflate(R.layout.layout_category_list_item, parent, false);
-            return new CategoryViewHolder(view,recipeListener);
+            return new CategoryViewHolder(view, recipeListener);
 
         }
         view = LayoutInflater.from(parent.getContext()).
@@ -55,25 +55,29 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         int itemViewType = getItemViewType(position);
         if (itemViewType == RECIPE_TYPE) {
             ((RecipeViewHolder) holder).onBind(recipe);
-        } else if (itemViewType == CATEGORY_TYPE){
-            ((CategoryViewHolder)holder).onBind(recipe);
+        } else if (itemViewType == CATEGORY_TYPE) {
+            ((CategoryViewHolder) holder).onBind(recipe);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (mRecipes.get(position).getSocial_rank() == -1){
+        if (mRecipes.get(position).getSocial_rank() == -1) {
             return CATEGORY_TYPE;
         } else if (mRecipes.get(position).getTitle().equals("LOADING...")) {
+            return LOADING_TYPE;
+        } else if (position == mRecipes.size() - 1
+                && position != 0
+                && !mRecipes.get(position).getTitle().equals("EXHAUSTED...")) {
             return LOADING_TYPE;
         } else {
             return RECIPE_TYPE;
         }
     }
 
-    public void displayCategories (){
-        List<Recipe>categories = new ArrayList<>();
-        for (int i = 0; i< Constants.DEFAULT_SEARCH_CATEGORIES.length; i++){
+    public void displayCategories() {
+        List<Recipe> categories = new ArrayList<>();
+        for (int i = 0; i < Constants.DEFAULT_SEARCH_CATEGORIES.length; i++) {
             Recipe recipe = new Recipe();
             recipe.setTitle(Constants.DEFAULT_SEARCH_CATEGORIES[i]);
             recipe.setImage_url(Constants.DEFAULT_SEARCH_CATEGORY_IMAGES[i]);
@@ -86,7 +90,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private boolean isLoading() {
         if (mRecipes != null
-                &&mRecipes.size() > 0) {
+                && mRecipes.size() > 0) {
             return mRecipes.get(mRecipes.size() - 1).getTitle().equals("LOADING...");
         }
         return false;

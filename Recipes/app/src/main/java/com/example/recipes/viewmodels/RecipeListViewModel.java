@@ -54,16 +54,23 @@ public class RecipeListViewModel extends ViewModel {
         this.isViewingRecipes = viewingRecipes;
     }
 
-    public boolean onBackPressed(){
+    public boolean onBackPressed() {
         if (isPerformingQuery) {
-           recipeRepository.cancelRequest();
-           isPerformingQuery = false;
+            recipeRepository.cancelRequest();
+            isPerformingQuery = false;
         }
-        if (isViewingRecipes){
+        if (isViewingRecipes) {
             isViewingRecipes = false;
             return false;
         }
         return true;
+    }
+
+    public void searchNextPage() {
+        /** if there is not any working query and recyclerView shows recipes */
+        if (!isPerformingQuery && isViewingRecipes) {
+            recipeRepository.searchNextPage();
+        }
     }
 
 
