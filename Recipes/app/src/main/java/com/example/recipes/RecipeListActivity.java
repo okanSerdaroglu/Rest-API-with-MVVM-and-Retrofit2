@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.recipes.adapters.OnRecipeListener;
 import com.example.recipes.adapters.RecipeRecyclerAdapter;
 import com.example.recipes.utils.Testing;
+import com.example.recipes.utils.VerticalSpacingItemDecorator;
 import com.example.recipes.viewmodels.RecipeListViewModel;
 
 public class RecipeListActivity extends BaseActivity implements OnRecipeListener {
@@ -30,7 +31,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
         subscribeObservers();
         initSearchView();
-        if (!recipeListViewModel.isViewingRecipes()){
+        if (!recipeListViewModel.isViewingRecipes()) {
             displaySearchCategories();
         }
     }
@@ -68,6 +69,9 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     private void initRecyclerView() {
         recipeRecyclerAdapter = new RecipeRecyclerAdapter(this);
         recyclerViewRecipeList.setAdapter(recipeRecyclerAdapter);
+        VerticalSpacingItemDecorator verticalSpacingItemDecorator
+                = new VerticalSpacingItemDecorator(30);
+        recyclerViewRecipeList.addItemDecoration(verticalSpacingItemDecorator);
     }
 
 
@@ -80,7 +84,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     public void onCategoryClick(String category) {
 
         recipeRecyclerAdapter.displayLoading();
-        recipeListViewModel.searchRecipesAPI(category,0);
+        recipeListViewModel.searchRecipesAPI(category, 0);
 
     }
 
@@ -88,7 +92,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         searchRecipesAPI("chicken breast", 0);
     }
 
-    private void displaySearchCategories (){
+    private void displaySearchCategories() {
         recipeListViewModel.setViewingRecipes(true);
         recipeRecyclerAdapter.displayCategories();
     }
