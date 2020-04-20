@@ -1,6 +1,5 @@
 package com.example.recipes.adapters;
 
-import android.content.DialogInterface;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +14,7 @@ import com.example.recipes.models.Recipe;
 
 public class RecipeViewHolder
         extends RecyclerView.ViewHolder
-        implements DialogInterface.OnClickListener {
+        implements View.OnClickListener {
 
     private TextView textViewTitle;
     private TextView textViewPublisher;
@@ -31,6 +30,8 @@ public class RecipeViewHolder
         textViewPublisher = itemView.findViewById(R.id.recipe_publisher);
         textViewSocialScore = itemView.findViewById(R.id.recipe_social_score);
         image = itemView.findViewById(R.id.recipe_image);
+
+        itemView.setOnClickListener(this);
     }
 
     void onBind(Recipe recipe) {
@@ -46,7 +47,7 @@ public class RecipeViewHolder
     }
 
     @Override
-    public void onClick(DialogInterface dialog, int which) {
+    public void onClick(View v) {
         recipeListener.onRecipeClick(getAdapterPosition());
     }
 }

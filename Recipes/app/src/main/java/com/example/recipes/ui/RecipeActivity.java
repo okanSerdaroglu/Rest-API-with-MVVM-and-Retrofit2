@@ -1,7 +1,7 @@
 package com.example.recipes.ui;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -20,10 +20,13 @@ public class RecipeActivity extends BaseActivity {
     private TextView recipeRank;
     private LinearLayout recipeIngredientsContainer;
     private ScrollView scrollView;
-    
+    private static final String TAG = "RecipeActivity";
+
+
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
         recipeImage = findViewById(R.id.recipe_image);
         recipeTitle = findViewById(R.id.recipe_title);
@@ -37,7 +40,7 @@ public class RecipeActivity extends BaseActivity {
     private void getIncomingIntent(){
         if (getIntent().hasExtra("recipe")){
             Recipe recipe = getIntent().getParcelableExtra("recipe");
-
+            Log.d(TAG, "getIncomingIntent: " + recipe.getTitle());
         }
     }
 
