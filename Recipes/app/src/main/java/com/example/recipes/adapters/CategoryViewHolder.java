@@ -20,19 +20,22 @@ public class CategoryViewHolder
     private CircleImageView categoryImage;
     private OnRecipeListener listener;
     private TextView categoryTitle;
+    private Recipe recipe;
 
     CategoryViewHolder(@NonNull View itemView,OnRecipeListener onRecipeListener) {
         super(itemView);
         this.listener = onRecipeListener;
         categoryImage = itemView.findViewById(R.id.category_image);
         categoryTitle = itemView.findViewById(R.id.category_title);
+        itemView.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
-
+       listener.onCategoryClick(recipe.getTitle());
     }
 
     void onBind(Recipe recipe) {
+        this.recipe = recipe;
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background);
 

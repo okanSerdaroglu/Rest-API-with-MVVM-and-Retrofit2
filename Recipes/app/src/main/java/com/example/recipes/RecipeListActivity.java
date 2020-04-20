@@ -19,6 +19,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     private RecyclerView recyclerViewRecipeList;
     private RecipeRecyclerAdapter recipeRecyclerAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +61,10 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     private void subscribeObservers() {
         recipeListViewModel.getRecipeList().observe(this, recipes -> {
             if (recipes != null) {
-                Testing.printRecipes(recipes, TAG);
-                recipeRecyclerAdapter.setRecipes(recipes);
+                if (recipeListViewModel.isViewingRecipes()){
+                    Testing.printRecipes(recipes, TAG);
+                    recipeRecyclerAdapter.setRecipes(recipes);
+                }
             }
         });
     }
@@ -93,8 +96,17 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     }
 
     private void displaySearchCategories() {
-        recipeListViewModel.setViewingRecipes(true);
+        recipeListViewModel.setViewingRecipes(false);
         recipeRecyclerAdapter.displayCategories();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (recipeListViewModel.onBackPressed()) {
+            super.onBackPressed();
+        } else {
+            displaySearchCategories();
+        }
+
+    }
 }
