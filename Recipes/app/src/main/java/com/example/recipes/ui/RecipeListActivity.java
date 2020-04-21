@@ -70,7 +70,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     private void subscribeObservers() {
         recipeListViewModel.getRecipeList().observe(this, recipes -> {
             if (recipes != null) {
-                if (recipeListViewModel.isViewingRecipes()){
+                if (recipeListViewModel.isViewingRecipes()) {
                     Testing.printRecipes(recipes, TAG);
                     recipeListViewModel.setPerformingQuery(false);
                     recipeRecyclerAdapter.setRecipes(recipes);
@@ -88,7 +88,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         recyclerViewRecipeList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                if (!recyclerViewRecipeList.canScrollVertically(1)){
+                if (!recyclerViewRecipeList.canScrollVertically(1)) {
                     recipeListViewModel.searchNextPage();
                 }
             }
@@ -98,8 +98,8 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     @Override
     public void onRecipeClick(int position) {
-        Intent intent = new Intent(RecipeListActivity.this ,RecipeActivity.class);
-        intent.putExtra("recipe",recipeRecyclerAdapter.getSelectedRecipe(position));
+        Intent intent = new Intent(RecipeListActivity.this, RecipeActivity.class);
+        intent.putExtra("recipe", recipeRecyclerAdapter.getSelectedRecipe(position));
         startActivity(intent);
     }
 
@@ -132,13 +132,13 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.recipe_search_menu,menu);
+        getMenuInflater().inflate(R.menu.recipe_search_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_categories){
+        if (item.getItemId() == R.id.action_categories) {
             displaySearchCategories();
         }
         return super.onOptionsItemSelected(item);
