@@ -78,7 +78,7 @@ public class RecipeApiClient {
         }
         mRetrieveRecipeRunnable = new RetrieveRecipeRunnable(recipeID);
         final Future handler = AppExecutors.getInstance().networkIO().submit(mRetrieveRecipeRunnable);
-
+        recipeTimeOut.setValue(false);
         AppExecutors.getInstance().networkIO().schedule(() -> {
             // let the user know it is time out
             recipeTimeOut.postValue(true);
