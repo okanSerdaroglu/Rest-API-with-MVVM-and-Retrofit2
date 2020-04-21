@@ -1,6 +1,7 @@
 package com.example.recipes.repositories;
 
 import androidx.lifecycle.LiveData;
+
 import com.example.recipes.models.Recipe;
 import com.example.recipes.requests.RecipeApiClient;
 
@@ -31,6 +32,10 @@ public class RecipeRepository {
 
     public LiveData<Recipe> getRecipe() {
         return mRecipeApiClient.getRecipe();
+    }
+
+    public LiveData<Boolean> isRecipeRequestTimeOut(){
+        return mRecipeApiClient.isRecipeRequestTimeOut();
     }
 
     public void searchRecipesAPI(String query, int pageNumber){
