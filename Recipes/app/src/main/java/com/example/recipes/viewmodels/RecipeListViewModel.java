@@ -25,6 +25,10 @@ public class RecipeListViewModel extends ViewModel {
         return isPerformingQuery;
     }
 
+    public LiveData<Boolean> isQueryExhausted() {
+        return recipeRepository.getIsQueryExhausted();
+    }
+
     public void setPerformingQuery(boolean performingQuery) {
         isPerformingQuery = performingQuery;
     }
@@ -68,7 +72,9 @@ public class RecipeListViewModel extends ViewModel {
 
     public void searchNextPage() {
         /** if there is not any working query and recyclerView shows recipes */
-        if (!isPerformingQuery && isViewingRecipes) {
+        if (!isPerformingQuery
+                && isViewingRecipes
+                && !isQueryExhausted().getValue()) {
             recipeRepository.searchNextPage();
         }
     }

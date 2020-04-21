@@ -2,11 +2,13 @@ package com.example.recipes.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,6 +78,12 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
                     recipeRecyclerAdapter.setRecipes(recipes);
                 }
             }
+        });
+
+        recipeListViewModel.isQueryExhausted().observe(this, aBoolean -> {
+             if (aBoolean) {
+                 Log.d(TAG,"onChanged : exhausted query");
+             }
         });
     }
 

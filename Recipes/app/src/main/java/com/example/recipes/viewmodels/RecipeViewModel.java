@@ -38,7 +38,7 @@ public class RecipeViewModel extends ViewModel {
         recipeRepository.searchRecipeByID(recipeID);
     }
 
-    public LiveData<Boolean> isRecipeRequestTimeOut(){
+    public LiveData<Boolean> isRecipeRequestTimeOut() {
         return recipeRepository.isRecipeRequestTimeOut();
     }
 
